@@ -1,17 +1,12 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Public IP Address</title>
+    <title>Get IP Address and Send to Webhook</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
     <h1>IP Address:</h1>
     <p id="ipAddress">Fetching IP address...</p>
-
-    <script>
-        // Log a message to the console
-        console.log("Hello, world! This is a console message.");
-    </script>
 
     <script>
         // Function to get the user's IP address
@@ -42,7 +37,7 @@
                     console.log("Successfully sent IP address to webhook:", response);
                 },
                 error: function(xhr, status, error) {
-                    console.error("Error sending IP address to webhook:", error);
+                    console.error("Error sending IP address to webhook:", xhr.responseText);
                 }
             });
         }
